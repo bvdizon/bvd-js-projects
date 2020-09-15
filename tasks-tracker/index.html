@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Tasks Tracker</title>
+
+    <style>
+        main {
+            width: 60vw;
+            margin: auto;
+        }
+
+        .form-inline {
+            justify-content: center;
+            width: 100%;
+        }
+
+    </style>
+</head>
+
+<body>
+    <main>
+        <h1 class="text-center my-5">The Group Tasks Tracker</h1>
+        <section id="addForm" class="my-3">
+            <form class="form-inline" id="addNewTask">                  
+                <div class="input-group mb-2 mr-sm-2">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="activities"><i class="fa fa-pencil-square-o"></i></label>
+                    </div>
+                    <select class="custom-select" id="activities">
+                      <option selected></option>
+                    </select>
+                  </div>
+              
+                <div class="input-group mb-2 mr-sm-2">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="agents"><i class="fa fa-user-o"></i></label>
+                    </div>
+                    <select class="custom-select" id="agents">
+                      <option selected disabled></option>
+                    </select>
+                  </div>
+              
+                <div class="input-group mb-2 mr-sm-2">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="fa fa-sticky-note-o"></i></div>
+                  </div>
+                  <input type="text" class="form-control" id="activityNotes" placeholder="Add notes...">
+                </div>
+              
+                <button type="submit" class="btn btn-primary mb-2">Add Task</button>
+              </form>
+        </section>
+
+        <section class="table table-responsive" id="tasksList">
+            <table class="table table-bordered table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">Activity</th>
+                        <th scope="col">Notes</th>
+                        <th scope="col">Owner</th>
+                        <th scope="col">Manage</th>
+                    </tr>
+                </thead>
+                <tbody id="tasks">
+                    <!-- insert tasks here -->
+                </tbody>
+            </table>
+        </section>
+
+    </main>
+
+
+
+
+
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-firestore.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyCMR-h04L3I71W3IOxq7af3r-_uhES-EM8",
+            authDomain: "the-group---tasks-tracker.firebaseapp.com",
+            databaseURL: "https://the-group---tasks-tracker.firebaseio.com",
+            projectId: "the-group---tasks-tracker",
+            storageBucket: "the-group---tasks-tracker.appspot.com",
+            messagingSenderId: "1013793128046",
+            appId: "1:1013793128046:web:7920ad7ec0bb2a3e2f707f"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+    </script>
+    <script src="app.js"></script>
+</body>
+
+</html>
