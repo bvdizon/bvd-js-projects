@@ -1,8 +1,8 @@
 
 // info below coming from Accu Weather API website
 const apiKey = 'dFApzgXvEPg64IzuADEc0z7NqJmMmGkD';
-const citySearchURL = 'http://dataservice.accuweather.com/locations/v1/cities/search';
-const currentConditionsURL = 'http://dataservice.accuweather.com/currentconditions/v1/';
+const citySearchURL = 'https://dataservice.accuweather.com/locations/v1/cities/search';
+const currentConditionsURL = 'https://dataservice.accuweather.com/currentconditions/v1/';
 let city = 'manchester'; //264885
 
 // function to fetch the data on a Promise from an API
