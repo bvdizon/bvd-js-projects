@@ -1,54 +1,72 @@
-const cityForm = document.querySelector('form');
-const card = document.querySelector('.card');
-const details = document.querySelector('.details');
-const time = document.querySelector('img.time');
-const icon = document.querySelector('.icon img');
 
-const updateUI = (data) => {
-  // destructure properties
-  const { cityDets, weather } = data;
+// add event listener to the form on 'submit'
+const form = document.querySelector('form.change-location');
 
-  // update details template
-  details.innerHTML = `
-    <h5 class="my-3">${cityDets.EnglishName}</h5>
-    <div class="my-3">${weather.WeatherText}</div>
-    <div class="display-4 my-4">
-      <span>${weather.Temperature.Metric.Value}</span>
-      <span>&deg;C</span>
-    </div>
-  `;
-
-  // update the night/day & icon images
-  const iconSrc = `img/icons/${weather.WeatherIcon}.svg`;
-  icon.setAttribute('src', iconSrc);
-  
-  const timeSrc = weather.IsDayTime ? 'img/day.svg' : 'img/night.svg';
-  time.setAttribute('src', timeSrc);
-
-  // remove the d-none class if present
-  if(card.classList.contains('d-none')){
-    card.classList.remove('d-none');
-  }
-};
-
+// this function will then call the functions getCity and getCondition
 const updateCity = async (city) => {
 
-  const cityDets = await getCity(city);
-  const weather = await getWeather(cityDets.Key);
-  return { cityDets, weather };
+    const cityDetails = await getCity(city);
+    const cityCondition = await getCondition(cityDetails.Key);
 
+    // Object short-hand notation
+    return { cityDetails, cityCondition }
+
+    /*
+    This is the long-hand way to write object
+        return {
+            cityDetails: cityDetails,
+            cityCondition: cityCondition
+        }
+    */
 };
 
-cityForm.addEventListener('submit', e => {
-  // prevent default action
-  e.preventDefault();
-  
-  // get city value
-  const city = cityForm.city.value.trim();
-  cityForm.reset();
 
-  // update the ui with new city
-  updateCity(city)
-    .then(data => updateUI(data))
-    .catch(err => console.log(err));
+const updateUI = data => {
+    // Destructing properties
+    const { cityDetails, cityCondition } = data;
+    /*
+    Without using 'Destructing properties' 
+        const cityDetails = data.cityDetails;
+        const cityCondition = data.cityCondition;
+    */
+
+    // show card if data is fetched by removing 'd-none' class
+    document.querySelector('.card').classList.remove('d-none');
+
+    // show card to dislay image if day or night time        
+    // ternary operator to check if day or night and assigning value on 'time'
+    const time = cityCondition.IsDayTime ? './img/day.svg' : './img/night.svg';
+    // updating UI based on the value of the variable 'time' 
+    let timeOfDay = document.querySelector('.time').setAttribute('src', time);
+
+    // show weather icon
+    document.querySelector('.icon > img').setAttribute('src', `./img/icons/${cityCondition.WeatherIcon}.svg`);
+    
+    // creating template string to display various data from fetched APIs
+    let html = `
+        <h5 class="my-3">${cityDetails.EnglishName}</h5>
+        <div class="my-3">${cityCondition.WeatherText}</div>
+        <div class="display-4 my-4">
+        <span>${cityCondition.Temperature.Metric.Value}</span>
+        <span>°C</span>
+        </div>
+    `;
+    // showing info from 'html' variable to UI
+    document.querySelector('.details').innerHTML = html;
+}
+
+
+
+form.addEventListener('submit', e => {
+    e.preventDefault();
+    // get the city input value on submit
+    const city = form.city.value.trim().toLowerCase();
+    form.reset();
+
+    // call a function passing the city to and catch the Promise and update UI
+    updateCity(city)
+        .then(data => updateUI(data))
+        .catch(err => console.log(err));
 });
+
+

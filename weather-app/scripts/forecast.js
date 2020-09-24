@@ -1,27 +1,31 @@
-const key = '	xvpOBAAypFh84YftzPvUCh8ZM80gbYIG';
 
-// get weather information
-const getWeather = async (id) => {
-  
-  const base = 'http://dataservice.accuweather.com/currentconditions/v1/';
-  const query = `${id}?apikey=${key}`;
+// info below coming from Accu Weather API website
+const apiKey = 'dFApzgXvEPg64IzuADEc0z7NqJmMmGkD';
+const citySearchURL = 'http://dataservice.accuweather.com/locations/v1/cities/search';
+const currentConditionsURL = 'http://dataservice.accuweather.com/currentconditions/v1/';
+let city = 'manchester'; //264885
 
-  const response = await fetch(base + query);
-  const data = await response.json();
-
-  return data[0];
-
-};
-
-// get city information
+// function to fetch the data on a Promise from an API
 const getCity = async (city) => {
-
-  const base = 'http://dataservice.accuweather.com/locations/v1/cities/search';
-  const query = `?apikey=${key}&q=${city}`;
-
-  const response = await fetch(base + query);
+  // query string URL
+  const query = `${citySearchURL}?apikey=${apiKey}&q=${city}`;
+  // using fetch to return a Response object
+  const response = await fetch(query);
+  // 'response.json()' returns a promise
+  // which will be caught using .then .catch when f(x) is called
   const data = await response.json();
-
+  // 'data' is returned as an array and we select the first hit '[0]'
   return data[0];
-
 };
+
+
+// function to get current conditions with the locationKey from getCity f(x)
+const getCondition = async (locationKey) => {
+  const query = `${currentConditionsURL}${locationKey}?apikey=${apiKey}`;
+  const response = await fetch(query);
+  const data = await response.json();
+  return data[0];
+};
+
+
+
